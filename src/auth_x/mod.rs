@@ -7,6 +7,13 @@ use crate::miyuki_core;
 #[derive(Debug)]
 pub struct XApi;
 
+impl CustomSuspiciousLoginError for x_api_rs::auth::SuspiciousLoginError {
+    pub fn new() -> Self{
+        let string= String::new();
+        let flow=
+    }
+}
+
 impl XApi{
     pub async fn create_sesstion(mut user_session: x_api_rs::TwAPI, primitive_type_auth: Miyuki) -> Result<(), Box<dyn std::error::Error>> {
 //         @TODO
@@ -17,12 +24,15 @@ impl XApi{
         let password = std::env::var("PASSWORD")?;
         tracing::debug!("username: {username}");
         tracing::debug!("password: {password}");
+
         let mut api = x_api_rs::TwAPI::new(Some(cookies_path.clone()))?;
         if !cookies_path.exists() {
             let result = api.login(&username, &password, "", None).await;
             if let Err(error) = result {
-                let error = error.downcast_ref::<SuspiciousLoginError>().unwrap();
-                println!("Enter your username (eg. @user): ");
+                let login_err: SuspiciousLoginError;
+                if let Some(error) = error.downcast_ref::<SuspiciousLoginError>(){
+                    login_err= error.unwrap();
+                };
                 let username= miyuki_core::Auth::input_user_id(primitive_type_auth);
                 api.login(&username, &password, "", Some(error.1.clone()))
                 .await?;
