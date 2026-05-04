@@ -1,4 +1,4 @@
-use crate::auth_x;
+use crate::auth_x::*;
 
 #[derive(Debug)]
 struct ImportXApi;

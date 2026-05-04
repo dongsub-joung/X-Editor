@@ -5,7 +5,7 @@ use x_api_rs::auth::SuspiciousLoginError;
 use crate::miyuki_core;
 
 #[derive(Debug)]
-pub struct XApi;
+struct XApi;
 
 impl XApi{
     pub async fn create_sesstion(mut user_session: x_api_rs::TwAPI, primitive_type_auth: Miyuki) -> Result<(), Box<dyn std::error::Error>> {
@@ -22,13 +22,15 @@ impl XApi{
         if !cookies_path.exists() {
             let result = api.login(&username, &password, "", None).await;
             if let Err(error) = result {
-                let login_err: SuspiciousLoginError;
+                let login_err: &SuspiciousLoginError;
                 if let Some(error) = error.downcast_ref::<SuspiciousLoginError>(){
-                    login_err= error.unwrap();
+                    login_err= error;
                 };
                 let username= miyuki_core::Auth::input_user_id(primitive_type_auth);
-                api.login(&username, &password, "", Some(error.1.clone()))
-                .await?;
+                if let Ok(None)= api.login(&username, &password, "", Some(error.1.clone()))
+                .await{
+                    eprintln!("{:?}", login_err);
+                };
             }
 
             match api.save_session(){
