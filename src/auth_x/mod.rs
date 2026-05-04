@@ -37,7 +37,11 @@ impl XApi{
                 api.login(&username, &password, "", Some(error.1.clone()))
                 .await?;
             }
-            api.save_session().unwrap();
+
+            match api.save_session(){
+                Err(e) => { eprintln!("{}", e); }
+                _ => { dbg!("[OK] Session connected"); },
+            };
         }
 
         // always call this for extract csrf
