@@ -11,6 +11,8 @@ struct FailGetUserId;
 struct FailGetFollowing;
 #[derive(Debug)]
 struct FailUsersLookup;
+#[derive(Debug)]
+struct FailGetFriends;
 
 #[derive(Error, Debug)]
 pub enum ImportErrs{
@@ -20,12 +22,14 @@ pub enum ImportErrs{
     FailGetFollowing,
     #[error("[FAILED] looking user up")]
     FailUsersLookup,
+    #[error("[FAILED finding friends]")]
+    FailGetFriends,
 }
 
 impl ImportXApi{
     pub async fn import_x_data<F>(mut user_session: F, primitive_type: Miyuki)
     where
-        F: Future<Output= x_api_rs::TwAPI>
+        F: Future<Output= x_api_rs::TwAPI>,
     -> Result<Box<dyn ImportErrs>
     {
 
@@ -63,13 +67,20 @@ impl ImportXApi{
         };
         tracing::debug!("response: {res:?}");
 
-        // loop {
-        //     let pagination = api.get_friends(user_id, true, Some(cursor.into()))?;
-        //     cursor = pagination.cursor.clone();
-        //     tracing::debug!("Found {:?} following", pagination.entries.len());
-        //     if !pagination.has_more {
-        //         break;
-        //     }
-        // }
+        loop {
+             let pagination = match api.get_friends(user_id, true, Some(cursor.into())){
+                Ok(e) => { e },
+                Err(e) =>{
+                    return ImportErrs::FailGetFriends;
+                },
+             }
+            
+             cursor = pagination.cursor.clone();
+             tracing::debug!("Found {:?} following", pagination.entries.len());
+             
+             if !pagination.has_more {
+                 break;
+             }
+         }
     }
 }
