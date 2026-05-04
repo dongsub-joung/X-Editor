@@ -7,7 +7,7 @@ use crate::miyuki_core;
 #[derive(Debug)]
 struct XApi;
 
-impl XApi{
+pub impl XApi{
     pub async fn create_sesstion(mut user_session: x_api_rs::TwAPI, primitive_type_auth: Miyuki) -> Result<(), Box<dyn std::error::Error>> {
 //         @TODO
         tracing_subscriber::fmt::init();

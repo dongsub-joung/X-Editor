@@ -1,5 +1,6 @@
 use crate::auth_x;
 use thiserror::Error;
+use std::future::Future;
 
 #[derive(Debug)]
 struct ImportXApi;
@@ -22,9 +23,13 @@ pub enum ImportErrs{
 }
 
 impl ImportXApi{
-    async fn import_x_data(mut user_session: x_api_rs::TwAPI, primitive_type: Miyuki) ->Result<Ok(), ImportErrs>{
+    async fn import_x_data<F>(mut user_session: F, primitive_type: Miyuki)
+    where
+        F: Future<Output= x_api_rs::TwAPI>
+    -> Result<Ok(), ImportErrs>{
+
         if !user_session.is_logged_in().await? {
-            user_session= auth_x::create_sesstion(user_session, primitive_type);
+            user_session= auth_x::XApi::create_sesstion(user_session, primitive_type);
         }
 
         let user_id = match user_session.me_rest_id().await{
