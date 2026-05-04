@@ -1,6 +1,4 @@
-use crate::auth_x;
 use thiserror::Error;
-use std::future::Future;
 
 #[derive(Debug)]
 struct ImportXApi;
@@ -53,7 +51,6 @@ impl ImportXApi{
                 return ImportErrs::FailGetFollowing;
             },
         };
-
         tracing::debug!("response: {res:?}");
 
         let ids = res
@@ -89,12 +86,12 @@ impl ImportXApi{
 
         let profile: miyuki::cach::User= make_user_profile_for_describtion(
             v_user_lookup_data, // info data
-            res, // flolowing 
+            res, // following 
             pagination, //friends
         );
 
         let _= match miyuki::Cach::save_cach_data(&profile){
-            Ok(rsp) => Debug!("saved cach user data"),
+            Ok(rsp) => tracing::debug!("saved cach user data"),
             Err(e) => {
                 return ImportErrs::FailSaveUserCach;
             }
