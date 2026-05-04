@@ -2,7 +2,8 @@ use dotenvy::dotenv;
 use std::path::PathBuf;
 use x_api_rs::auth::SuspiciousLoginError;
 
-#[tokio::main]
+use crate::miyuki_core;
+
 async fn request_data_xapi() -> Result<(), Box<dyn std::error::Error>> {
     tracing_subscriber::fmt::init();
     let _ = dotenv();
@@ -17,7 +18,7 @@ async fn request_data_xapi() -> Result<(), Box<dyn std::error::Error>> {
         if let Err(error) = result {
             let error = error.downcast_ref::<SuspiciousLoginError>().unwrap();
             println!("Enter your username (eg. @user): ");
-            let username = read_string();
+            let username =miyuki_core::Auth::input_user_id("");  // @TODO
             api.login(&username, &password, "", Some(error.1.clone()))
             .await?;
         }
