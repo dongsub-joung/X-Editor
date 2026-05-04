@@ -18,15 +18,16 @@ pub enum ImportErrs{
     FailGetUserId,
     #[error("[FAILED] Geting followers")]
     FailGetFollowing,
-    #[error("[FAILED] Geting followers")]
+    #[error("[FAILED] looking user up")]
     FailUsersLookup,
 }
 
 impl ImportXApi{
-    async fn import_x_data<F>(mut user_session: F, primitive_type: Miyuki)
+    pub async fn import_x_data<F>(mut user_session: F, primitive_type: Miyuki)
     where
         F: Future<Output= x_api_rs::TwAPI>
-    -> Result<Ok(), ImportErrs>{
+    -> Result<Box<dyn ImportErrs>
+    {
 
         if !user_session.is_logged_in().await? {
             user_session= auth_x::XApi::create_sesstion(user_session, primitive_type);
