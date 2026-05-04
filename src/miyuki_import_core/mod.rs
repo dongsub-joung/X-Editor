@@ -59,7 +59,7 @@ impl ImportXApi{
             .map(|v| v.as_i64().unwrap_or_default().to_string())
             .collect();
 
-        let res = match user_session.users_lookup(ids).await{
+        let v_user_lookup_data = match user_session.users_lookup(ids).await{
             Ok(v_data) => { v_data },
             Err(e) => {
                 return ImportErrs::FailUsersLookup;
@@ -67,13 +67,14 @@ impl ImportXApi{
         };
         tracing::debug!("response: {res:?}");
 
+        let pagination; //@TODO
         loop {
-             let pagination = match api.get_friends(user_id, true, Some(cursor.into())){
+             pagination = match api.get_friends(user_id, true, Some(cursor.into())){
                 Ok(e) => { e },
                 Err(e) =>{
                     return ImportErrs::FailGetFriends;
                 },
-             }
+             };
             
              cursor = pagination.cursor.clone();
              tracing::debug!("Found {:?} following", pagination.entries.len());
@@ -82,5 +83,16 @@ impl ImportXApi{
                  break;
              }
          }
+
+        // struct User
+        let profile= make_user_profile_for_describtion(
+            v_user_lookup_data, // info data
+            res, // flolowing 
+            pagination, //friends
+        );
+
+        let user_profile_form:: Cach_User= generate_user_profile_info(profile);
+
+        miyuki_core::Randering::generate_user_profile_info(user_profile_form); 
     }
 }
