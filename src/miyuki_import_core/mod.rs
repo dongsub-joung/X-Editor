@@ -13,6 +13,8 @@ struct FailGetFollowing;
 struct FailUsersLookup;
 #[derive(Debug)]
 struct FailGetFriends;
+#[derive(Debug)]
+struct FailSaveUserCach;
 
 #[derive(Error, Debug)]
 pub enum ImportErrs{
@@ -22,8 +24,10 @@ pub enum ImportErrs{
     FailGetFollowing,
     #[error("[FAILED] looking user up")]
     FailUsersLookup,
-    #[error("[FAILED finding friends]")]
+    #[error("[FAILED] finding friends]")]
     FailGetFriends,
+    #[error("[FAILED] finding friends]")]
+    FailSaveUserCach,
 }
 
 impl ImportXApi{
@@ -32,7 +36,6 @@ impl ImportXApi{
         F: Future<Output= x_api_rs::TwAPI>,
     -> Result<Box<dyn ImportErrs>
     {
-
         if !user_session.is_logged_in().await? {
             user_session= auth_x::XApi::create_sesstion(user_session, primitive_type);
         }
@@ -84,14 +87,20 @@ impl ImportXApi{
              }
          }
 
-        // struct User
-        let profile= make_user_profile_for_describtion(
+        let profile: miyuki::cach::User= make_user_profile_for_describtion(
             v_user_lookup_data, // info data
             res, // flolowing 
             pagination, //friends
         );
 
-        let user_profile_form:: Cach_User= generate_user_profile_info(profile);
+        let _= match miyuki::Cach::save_cach_data(&profile){
+            Ok(rsp) => Debug!("saved cach user data"),
+            Err(e) => {
+                return ImportErrs::FailSaveUserCach;
+            }
+        }; 
+
+        let user_profile_form: miyuki::Form= generate_user_profile_info(&profile);
 
         miyuki_core::Randering::generate_user_profile_info(user_profile_form); 
     }
