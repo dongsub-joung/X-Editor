@@ -7,13 +7,6 @@ use crate::miyuki_core;
 #[derive(Debug)]
 pub struct XApi;
 
-impl CustomSuspiciousLoginError for x_api_rs::auth::SuspiciousLoginError {
-    pub fn new() -> Self{
-        let string= String::new();
-        let flow=
-    }
-}
-
 impl XApi{
     pub async fn create_sesstion(mut user_session: x_api_rs::TwAPI, primitive_type_auth: Miyuki) -> Result<(), Box<dyn std::error::Error>> {
 //         @TODO
