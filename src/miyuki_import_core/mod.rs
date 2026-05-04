@@ -1,4 +1,4 @@
-use crate::auth_x::*;
+use crate::auth_x;
 use thiserror::Error;
 
 #[derive(Debug)]
@@ -6,11 +6,19 @@ struct ImportXApi;
 
 #[derive(Debug)]
 struct FailGetUserId;
+#[derive(Debug)]
+struct FailGetFollowing;
+#[derive(Debug)]
+struct FailUsersLookup;
 
 #[derive(Error, Debug)]
-enum ImportErrs{
+pub enum ImportErrs{
     #[error("[FAILED] Geting user id")]
-    FailGetUserId(),
+    FailGetUserId,
+    #[error("[FAILED] Geting followers")]
+    FailGetFollowing,
+    #[error("[FAILED] Geting followers")]
+    FailUsersLookup,
 }
 
 impl ImportXApi{
@@ -22,10 +30,17 @@ impl ImportXApi{
         let user_id = match user_session.me_rest_id().await{
             Ok(res) => res,
             Err(e) => {
-                return e;
+                return ImportErrs::FailGetUserId;
             },
         };
-        let res = user_session.get_followingids(user_id.to_string(), -1).await?;
+
+        let res = match user_session.get_following_ids(user_id.to_string(), -1).await{
+            Ok(pagination_response) =>{ pagination_response },
+            Err(e) => {
+                return ImportErrs::FailGetFollowing;
+            },
+        };
+
         tracing::debug!("response: {res:?}");
 
         let ids = res
@@ -34,7 +49,12 @@ impl ImportXApi{
             .map(|v| v.as_i64().unwrap_or_default().to_string())
             .collect();
 
-        let res = user_session.users_lookup(ids).await?;
+        let res = match user_session.users_lookup(ids).await{
+            Ok(v_data) => { v_data },
+            Err(e) => {
+                return ImportErrs::FailUsersLookup;
+            }
+        };
         tracing::debug!("response: {res:?}");
 
         // loop {
