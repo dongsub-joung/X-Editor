@@ -1,5 +1,5 @@
 struct RemainedData{
-    user_input_data: Data
+    user_input_data: SnapShort
 }
 
 impl RemainedData{
