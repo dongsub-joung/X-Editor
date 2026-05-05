@@ -20,7 +20,7 @@ pub struct Caputre{
 }
 
 impl Caputre{
-    pub fn caputring(&self, &mut miyuki: GUI) -> Result<Ok(), Err()>{
+    pub fn caputring(miyuki: RefCell<Rc<GUI>>) -> Result<Ok(), Err()>{
         loop{
             let inputed= miyuki.read_user_input(); // -> GUI struct
             match inputed.get_text().map_macro_type(){
