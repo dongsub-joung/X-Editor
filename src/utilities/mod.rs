@@ -15,7 +15,7 @@ impl UpTime{
         date::Date::get_now().fromat("%yyy%-%mm%-%dd%");
     }
 
-    pub fn get_up_time(&self) -> &Self{
+    pub fn get_up_time(&self) -> &Time{
         // @TODO calculate Time
 
         self.up_time
