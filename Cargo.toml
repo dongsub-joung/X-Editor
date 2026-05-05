@@ -10,3 +10,4 @@ tokio = { version = "1.52.1", features = ["full"] }
 tracing-subscriber = "0.3.23"
 tracing = "0.1.44"
 thiserror = "2.0.18"
+clipboard-win = "5.4.1"
