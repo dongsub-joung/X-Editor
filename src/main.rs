@@ -7,6 +7,6 @@ fn main() {
     let miyuki= Rc<RefCell<miyuki_core::MiyukiGui::init()>>;
 
     loop{
-        miyuki_core::capturing(miyuki);
+        miyuki_core::capturing(&miyuki);
     }
 }
