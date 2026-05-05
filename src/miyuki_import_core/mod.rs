@@ -26,7 +26,7 @@ pub enum ImportErrs{
     FailUsersLookup,
     #[error("[FAILED] finding friends]")]
     FailGetFriends,
-    #[error("[FAILED] finding friends]")]
+    #[error("[FAILED] finding Saved User Cach]")]
     FailSaveUserCach,
 }
 
