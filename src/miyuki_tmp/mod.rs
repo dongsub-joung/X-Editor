@@ -1,10 +1,11 @@
 struct RemainedData{
-    user_data: SnapShort
+    user_data: SnapShot
 }
 
 impl RemainedData{
-   pub new() -> Self{
-       let user_data= SnapShort::new();
-        self { user_data }
+   pub save_snapshot() -> Result<Ok(), Box<dyn Error::IO>>{
+       // @TODO create let snapshot
+
+       utilities::IO::write_file(snapshot)?;
    }
 }
