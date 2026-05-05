@@ -1,3 +1,5 @@
+// @TODO ? operater(thiserror) | match
+// ? In RustLang The Book, ? operater -> type caste using trait From
 use thiserror::Error;
 
 #[derive(Debug)]
