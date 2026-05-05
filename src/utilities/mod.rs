@@ -26,6 +26,7 @@ struct DocumentaryReport{
     user_id: UID,
     up_time: UpTime,
     
+    
 }
 
 enum utilities{
@@ -33,6 +34,6 @@ enum utilities{
 }
 
 
-impl utilities{
+impl DocumentaryReport{
 
 }
