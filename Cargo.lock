@@ -8,6 +8,7 @@ version = "0.1.0"
 dependencies = [
  "clipboard-win",
  "dotenvy",
+ "suffix",
  "thiserror 2.0.18",
  "tokio",
  "tracing",
@@ -1226,6 +1227,12 @@ name = "stable_deref_trait"
 version = "1.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6ce2be8dc25455e1f91df71bfa12ad37d7af1092ae736f3a6cd0e37bc7810596"
+
+[[package]]
+name = "suffix"
+version = "1.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "888734b9b84b66490ad9c6690ed200499b92bb8f4faec5a7bf61633661054199"
 
 [[package]]
 name = "syn"

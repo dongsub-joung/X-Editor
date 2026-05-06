@@ -1,3 +1,5 @@
+use suffix::SuffixTable;
+
 // @TODO Miyiki_core is GUI thread
 
 // @TODO Auth used on other btn option body
@@ -22,10 +24,16 @@ pub struct Caputre{
 impl Caputre{
     pub fn caputring(miyuki: RefCell<Rc<GUI>>) -> Result<Ok(), Err()>{
         loop{
-            let inputed= miyuki.read_user_input(); // -> GUI struct
-            match inputed.get_text().map_macro_type(){
-                String::from("!import") => {
-                    Caputre::inporting
+            let inputed= miyuki.read_user_input()?; // -> GUI struct
+            
+            let accepted_inpute.get_text().map_macro_type() ;
+
+            let 
+
+            match accepted_inpute {
+                accepted_inpute.contains("!import") => {
+                    let sa= SubffixTable::from_parts(accepted_inpute);
+                    Caputre::inporting // inporting!(sa.positions("!import("));
                 },
                 _ => {
                     Caputre::red_marking
