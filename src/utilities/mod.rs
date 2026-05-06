@@ -37,7 +37,9 @@ impl DocumentaryReport{
 struct Filter;
 impl Fillter{
     pub fn string_check(string: String) -> Some(String){
-        // validator
+        // @TODO validator
+        // https://github.com/Keats/validator
+        // https://github.com/seanmonstar/warp
     }
 }
 
