@@ -23,23 +23,24 @@ impl UpTime{
 }
 
 struct DocumentaryReport{
-    user_id: UID,
-    up_time: UpTime,
-    
-    
+    user: user::User,
+    up_time: user::UpTime,    
 }
 
 impl DocumentaryReport{
+    pub fn get_doc_report(){
+        self { user: User::get_user_data, up_time: User::get_up_time }
+    }
 }
 
 #[deriven(Debug)]
 struct Filter;
-impl Filter{
+impl Fillter{
     pub fn string_check(string: String) -> Some(String){
         // validator
     }
 }
 
-enum utilities{
-    filter: Filter
+pub enum utilities{
+    Fillter: Fillter
 }
