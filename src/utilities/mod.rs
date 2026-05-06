@@ -29,11 +29,17 @@ struct DocumentaryReport{
     
 }
 
-enum utilities{
-
+impl DocumentaryReport{
 }
 
+#[deriven(Debug)]
+struct Filter;
+impl Filter{
+    pub fn string_check(string: String) -> Some(String){
+        // validator
+    }
+}
 
-impl DocumentaryReport{
-
+enum utilities{
+    filter: Filter
 }
