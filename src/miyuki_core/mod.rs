@@ -37,11 +37,12 @@ impl Caputre{
                 Some(string) => string,
                 None => String::new()
             }
-                
-            match regulared_text {
-                regulared_text.contains("!import") => {
-                    let sa= SubffixTable::from_parts(regulared_text);
-                    Caputre::inporting // inporting!(sa.positions("!import("));
+
+            let text_struct= Regular::from(regulared_text);
+            match text_struct {
+                Regular::Import => {
+                    let data= text_struct.get_content();
+                    Caputre::inporting // inporting!(data);
                 },
                 _ => {
                     Caputre::red_marking
