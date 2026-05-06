@@ -20,6 +20,10 @@ impl Auth{
 // @TODO GUI
 // ...
 
+
+// @TODO macro[import_x_post]
+// https://github.com/greyblake/whatlang-rs/blob/master/src/core/detect.rs
+
 pub struct Caputre{
     pub Importing: marcro!(import_x_post),
     // ...
