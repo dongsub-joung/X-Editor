@@ -7,9 +7,13 @@ use suffix::SuffixTable;
 pub struct Auth;
 
 impl Auth{
-//     @TODO
-    pub fn input_user_id(_str: String) -> String {
-        _str.to_string()
+    pub fn input_user_id(user_inpute: String) -> String {
+        let mut checked= utilities::Utilities::Regular::check(user_inpute); 
+        let if !Some(_string) = checked{
+            checked= Default::default();
+        }
+
+        checked
     }
 }
 
@@ -26,13 +30,17 @@ impl Caputre{
         loop{
             let inputed= miyuki.read_user_input()?; // -> GUI struct
             
-            let accepted_inpute.get_text().map_macro_type() ;
+            let accepted_inpute= inputed.get_text().map_macro_type();
 
-            let 
-
-            match accepted_inpute {
-                accepted_inpute.contains("!import") => {
-                    let sa= SubffixTable::from_parts(accepted_inpute);
+            let regulared_text= utilities::Utilities::Regular::check(accepted_inpute); 
+            let regulared_text= match regulared_text{
+                Some(string) => string,
+                None => String::new()
+            }
+                
+            match regulared_text {
+                regulared_text.contains("!import") => {
+                    let sa= SubffixTable::from_parts(regulared_text);
                     Caputre::inporting // inporting!(sa.positions("!import("));
                 },
                 _ => {
