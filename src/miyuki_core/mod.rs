@@ -25,6 +25,9 @@ impl Auth{
 // @TODO macro[import_x_post]
 // https://github.com/greyblake/whatlang-rs/blob/master/src/core/detect.rs
 
+// @TODO HTMP rendering
+// https://github.com/lambda-fairy/maud
+
 pub struct Caputre{
     pub Importing: marcro!(import_x_post),
     // ...
