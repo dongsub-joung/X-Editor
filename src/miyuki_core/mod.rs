@@ -19,7 +19,8 @@ impl Auth{
 
 // @TODO GUI
 // ...
-
+// @TODO Image processing
+// https://github.com/image-rs/image
 
 // @TODO macro[import_x_post]
 // https://github.com/greyblake/whatlang-rs/blob/master/src/core/detect.rs
@@ -36,7 +37,7 @@ impl Caputre{
             
             let accepted_inpute= inputed.get_text().map_macro_type();
 
-            let regulared_text= utilities::Utilities::Regular::check(accepted_inpute); 
+            let regulared_text= utilities::Utilities::Fillter::string_check(accepted_inpute); 
             let regulared_text= match regulared_text{
                 Some(string) => string,
                 None => String::new()
