@@ -34,7 +34,7 @@ impl DocumentaryReport{
 }
 
 #[deriven(Debug)]
-struct Filter;
+struct Fillter;
 impl Fillter{
     pub fn string_check(string: String) -> Some(String){
         // @TODO validator
@@ -43,6 +43,21 @@ impl Fillter{
     }
 }
 
+trait Regular{
+    from(string: String) -> Self,
+}
+
+struct ImporingXPost{
+    x_url: String,
+}
+
+impl ImportingXPost for Regular{
+    pub fn from(string: String) -> Self{
+        self { x_url: string }
+    }
+}
+
 pub enum utilities{
-    Fillter: Fillter
+    Fillter: Fillter,
+    Uptime: UpTime,
 }
