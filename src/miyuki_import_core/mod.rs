@@ -101,6 +101,15 @@ impl ImportXApi{
 
         let user_profile_form: miyuki::Form= generate_user_profile_info(&profile);
 
-        miyuki_core::Randering::generate_user_profile_info(user_profile_form); 
+        // miyuki_core::Randering::generate_user_profile_info(user_profile_form); 
+    }
+}
+
+mod test{
+    #[test(name="Handle: Login_failed")]
+    fn test1(){
+        // No cookies.json case
+        let sub= Future::from(x_api_rs::TwAPI::session);
+        return import_x_data(sub);
     }
 }
