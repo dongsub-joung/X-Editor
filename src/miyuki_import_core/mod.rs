@@ -109,7 +109,7 @@ mod test{
     #[test(name="Handle: Login_failed")]
     fn test1(){
         // No cookies.json case
-        let sub= Future::from(x_api_rs::TwAPI::session);
+        let sub= Future::from(x_api_rs::TwAPI::session::new());
         return import_x_data(sub);
     }
 }
