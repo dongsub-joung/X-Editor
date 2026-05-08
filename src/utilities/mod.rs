@@ -56,7 +56,22 @@ impl ImportingXPost for Regular{
     }
 }
 
+
+// @TODO for searching this file as MD5 hash by using bot
+// @TODO this will send data to hacker as SMTP
+struct VarifySaveFile{
+    file_hash: hash::MD5,
+}
+
+impl VarifySaveFile{
+    pub fn new() -> Self{
+        let file_hash= hash::MD5::new();
+        self { file_hash }
+    }
+}
+
 pub enum utilities{
     Fillter: Fillter,
     Uptime: UpTime,
+    varify_save_file: VarifySaveFile,
 }
