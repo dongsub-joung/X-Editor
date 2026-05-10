@@ -9,7 +9,6 @@ struct XApi;
 
 pub impl XApi{
     pub async fn create_sesstion(mut user_session: x_api_rs::TwAPI, primitive_type_auth: Miyuki) -> Result<(), Box<dyn std::error::Error>> {
-//         @TODO
         tracing_subscriber::fmt::init();
         let _ = dotenv();
         let cookies_path = PathBuf::from("cookies.json");

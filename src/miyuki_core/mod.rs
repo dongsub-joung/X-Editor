@@ -17,6 +17,21 @@ impl Auth{
     }
 }
 
+struct OneLine{
+    line: HashMap<Miyuki_GUI_Componante, String>;
+}
+
+impl OneLine{
+   pub fn new(line_data: GUI_line, body :String) -> Self{
+       let mut map: HashMap<Miyuki_GUI_Componante, String>= HashMap::new(); 
+       self { map.push( (key:line_data, value: body) )  }
+   }
+
+    pub fn get_data(one_line: &self, count: usize) -> &HashMap<Miyuki_GUI_Componante, String>{
+        one_line.line.iter.Fillter(|e| e.get_key(count) );
+    }
+}
+
 // @TODO GUI
 // ...
 // @TODO Image processing
@@ -47,6 +62,9 @@ impl Caputre{
             }
 
             let text_struct= Regular::from(regulared_text);
+            
+            // @TODO use OneLine
+
             match text_struct {
                 Regular::Import => {
                     let data= text_struct.get_content();
