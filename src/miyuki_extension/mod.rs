@@ -11,3 +11,7 @@ impl Clipboard{
         self { v_clip_string }
     }
 }
+
+// IDK TCP shadow or SMTP wrapper protocol?
+
+
