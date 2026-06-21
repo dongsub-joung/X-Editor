@@ -1,24 +1,27 @@
+use chrono::{DateTime, Utc};
+
+#[derive(Debug)]
 struct UpTime{
-    date: Date, // @TODO if date no needed for calculating Time, delete it
-    up_time: Time,
+    // up_time: DataTime<Utc>,
+    // date: Date, @TODO if date no needed for calculating Time, delete it
 }
 
 impl UpTime{
     pub fn new() -> Self{
-        let data= date::Date::new();
-        let up_time= time::Time::new();  // @TODO find a crate for Time
+        let up_time = Utc::now();;
 
-        self { data, up_time }
+        self { up_time }
     }
     
-    pub fn get_date(&self) -> Time {
-        date::Date::get_now().fromat("%yyy%-%mm%-%dd%");
+    pub fn get_now_time(&self) -> DateTime<Utc> {
+        Utc::now()
     }
 
-    pub fn get_up_time(&self) -> &Time{
-        // @TODO calculate Time
-
-        self.up_time
+    // per a sec, reset 
+    pub fn get_up_time(&self) -> &DateTime::datetime::NaiveTime{
+        // self.up_time.datetime.date;  // NaiveDate
+        // self.up_time.datetime.time;  //NaiveTime   (secs: u32,frac: u32)
+        let now= Utc::now();
     }
 }
 
@@ -74,4 +77,16 @@ pub enum utilities{
     Fillter: Fillter,
     Uptime: UpTime,
     varify_save_file: VarifySaveFile,
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn it_works() {
+        let result = add(2, 2);
+        assert_eq!(result, 4);
+    }
 }

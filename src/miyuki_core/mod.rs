@@ -80,3 +80,4 @@ impl Caputre{
         thread::exit(0);
     }
 }
+
