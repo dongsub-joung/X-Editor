@@ -14,8 +14,12 @@ end
 button = UI.new_button('Button') #post
 
 UI.button_on_clicked(button) do
+  # UI.msg_box(main_window, 'Information', 'You clicked the button')
+  
   # do post request rust server
-  UI.msg_box(main_window, 'Information', 'You clicked the button')
+  # user_input= text_box.get_body()
+  # api.post(user_input)
+  # controlloer: rounter.api("/getBody")
 end
 
 # options
