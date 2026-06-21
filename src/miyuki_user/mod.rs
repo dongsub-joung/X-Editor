@@ -12,9 +12,9 @@ pub struct Language {
     pub option: LanguageOptions,
 }
 impl Language {
-    pub fn new(language: LanguageOptions) -> Self{
+    pub fn new(option: LanguageOptions) -> Self{
         Self { option }
-    }
+    } 
 }
 
 pub struct User{
@@ -34,7 +34,7 @@ impl User{
         &self.uid
     }
 
-    pub fn get_user_language_option(&self) -> &Language::LanguageOptions{
+    pub fn get_user_language_option(&self) -> &Language{
         &self.language
     }
 
