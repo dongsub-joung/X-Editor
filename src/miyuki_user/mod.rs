@@ -12,19 +12,22 @@ struct Language{
 
 struct User{
     pub uid: UID,
-    language: Language,
+    pub language: Language,
     // uptime: utilities::UpTime, cant cal
 }
 
 impl User{
-    pub fn new() -> Self{
+    pub fn new(language: LanguageOptions) -> Self{
         let uid= uid::Uid::new();
-        let language= LanguageOptions::JAPANESE;
         self { uid, language}
     }
 
-    pub fn get_user_data(&self) -> &Uid{
+    pub fn get_user_uid(&self) -> &Uid{
         self.uid
+    }
+
+    pub fn get_user_language_option(&self) -> LanguageOptions{
+        self.language
     }
 
     // pub fn get_up_time(&self) -> utilities::UpTime{
@@ -53,5 +56,12 @@ mod tests {
         let user_uid= user.get_user_data();
 
         assert_eq!(user_uid, user.uid);
+    }
+
+    #[test]
+    fn language(){
+        let user= User::new(LanguageOptions::JAPANESE);
+        
+        assert_eq!(LanguageOptions::JAPANESE, user.language);
     }
 }
