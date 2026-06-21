@@ -1,39 +1,30 @@
-use chrono::{DateTime, Utc};
+// use chrono::{DateTime, Utc};
 
-#[derive(Debug)]
-struct UpTime{
-    // up_time: DataTime<Utc>,
-    // date: Date, @TODO if date no needed for calculating Time, delete it
-}
+// #[derive(Debug)]
+// struct UpTime{
+//     // up_time: DataTime<Utc>,
+//     // date: Date, @TODO if date no needed for calculating Time, delete it
+// }
 
-impl UpTime{
-    pub fn new() -> Self{
-        let up_time = Utc::now();;
+// impl UpTime{
+//     pub fn new() -> Self{
+//         let up_time = Utc::now();;
 
-        self { up_time }
-    }
+//         self { up_time }
+//     }
     
-    pub fn get_now_time(&self) -> DateTime<Utc> {
-        Utc::now()
-    }
+//     pub fn get_now_time(&self) -> DateTime<Utc> {
+//         Utc::now()
+//     }
 
-    // per a sec, reset 
-    pub fn get_up_time(&self) -> &DateTime::datetime::NaiveTime{
-        // self.up_time.datetime.date;  // NaiveDate
-        // self.up_time.datetime.time;  //NaiveTime   (secs: u32,frac: u32)
-        let now= Utc::now();
-    }
-}
+//     // per a sec, reset 
+//     pub fn get_up_time(&self) -> &DateTime::datetime::NaiveTime{
+//         // self.up_time.datetime.time;  //NaiveTime   (secs: u32,frac: u32)
+//         let now= Utc::now();
+//     }
+// }
 
-struct DocumentaryReport{
-    user: user::User,
-}
 
-impl DocumentaryReport{
-    pub fn get_doc_report(user: User){
-        self { user: user.get_user_data(), up_time: user.get_up_time() }
-    }
-}
 
 #[deriven(Debug)]
 struct Fillter;
@@ -46,7 +37,7 @@ impl Fillter{
 }
 
 trait Regular{
-    from(string: String) -> Self,
+    fn from_str(string: String) -> Self;
 }
 
 struct ImporingXPost{
@@ -67,18 +58,14 @@ struct VarifySaveFile{
 }
 
 impl VarifySaveFile{
-    pub fn new() -> Self{
-        let file_hash= hash::MD5::new();
+    pub fn new(file: file::File) -> Self{
+        let file_hash= hash::check_sum::new(file);
         self { file_hash }
     }
-}
 
-pub enum utilities{
-    Fillter: Fillter,
-    Uptime: UpTime,
-    varify_save_file: VarifySaveFile,
+    // For Excention 
+    // pub fn compare(check_shum: hash::MD5) -> bool{}
 }
-
 
 #[cfg(test)]
 mod tests {
