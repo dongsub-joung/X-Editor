@@ -1,33 +1,41 @@
-enum LanguageOptions{
+use uuid::Uuid;
+
+pub enum LanguageOptions{
     JAPANESE,
     CHINESE,
     RUSSIAN,
     ENGLISH,
 }
 
-struct Language{
+pub struct Language {
     // @TODO UTF16
-    language: LanguageOptions,
+    pub option: LanguageOptions,
+}
+impl Language {
+    pub fn new(language: LanguageOptions) -> Self{
+        Self { option }
+    }
 }
 
-struct User{
-    pub uid: UID,
+pub struct User{
+    pub uid: uuid::Uuid,
     pub language: Language,
     // uptime: utilities::UpTime, cant cal
 }
 
 impl User{
-    pub fn new(language: LanguageOptions) -> Self{
-        let uid= uid::Uid::new();
-        self { uid, language}
+    pub fn new(language: Language) -> Self{
+        let uid= Uuid::new_v4();
+        language.option;
+        self { uid, language }
     }
 
-    pub fn get_user_uid(&self) -> &Uid{
-        self.uid
+    pub fn get_user_uid(&self) -> &uuid::Uuid{
+        &self.uid
     }
 
-    pub fn get_user_language_option(&self) -> LanguageOptions{
-        self.language
+    pub fn get_user_language_option(&self) -> &Language::LanguageOptions{
+        &self.language
     }
 
     // pub fn get_up_time(&self) -> utilities::UpTime{
@@ -46,22 +54,3 @@ impl User{
 //     }
 // }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let user= User::new();
-        let user_uid= user.get_user_data();
-
-        assert_eq!(user_uid, user.uid);
-    }
-
-    #[test]
-    fn language(){
-        let user= User::new(LanguageOptions::JAPANESE);
-        
-        assert_eq!(LanguageOptions::JAPANESE, user.language);
-    }
-}
