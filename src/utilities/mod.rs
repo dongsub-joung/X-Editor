@@ -66,14 +66,3 @@ impl VarifySaveFile{
     // For Excention 
     // pub fn compare(check_shum: hash::MD5) -> bool{}
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
