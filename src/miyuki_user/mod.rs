@@ -32,15 +32,16 @@ impl User{
     // }
 }
 
-struct DocumentaryReport{
-    user: User,
-}
+// struct DocumentaryReport{
+//     user: User,
+    
+// }
 
-impl DocumentaryReport{
-    pub fn get_doc_report(user: User){
-        self { user: user.get_user_data(), up_time: user.get_up_time() }
-    }
-}
+// impl DocumentaryReport{
+//     pub fn get_doc_report(user: User){
+//         self { user: user.get_user_data() }
+//     }
+// }
 
 #[cfg(test)]
 mod tests {
