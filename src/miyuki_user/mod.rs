@@ -43,6 +43,9 @@ impl User{
     // }
 }
 
+
+// @TODO Auth used on other btn option body
+
 // struct DocumentaryReport{
 //     user: User,
     

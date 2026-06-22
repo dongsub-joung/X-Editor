@@ -66,3 +66,17 @@ impl VarifySaveFile{
     // For Excention 
     // pub fn compare(check_shum: hash::MD5) -> bool{}
 }
+
+#[derive(Debug)]
+pub struct Auth;
+
+impl Auth{
+    pub fn input_user_id(user_inpute: String) -> String {
+        let mut checked= utilities::Utilities::Regular::check(user_inpute); 
+        let if !Some(_string) = checked{
+            checked= Default::default();
+        }
+
+        checked
+    }
+}
