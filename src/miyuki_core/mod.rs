@@ -75,7 +75,7 @@ impl SessionVarify{
         
         let mut v_bool:Vec<bool>= Vec::new();
         for (i, out_c) in self.saved_hashed_session_id.chars().into_iter().enumerate(){
-            for (j,nasty_c) in hashed_session_domain_id.chars().into_iter().enumerate(){
+            for (j,nasty_c) in hashed_session_domain_id.clone().chars().into_iter().enumerate(){
                 if i == j {
                     if out_c == nasty_c{
                         v_bool.push(true);
@@ -85,8 +85,14 @@ impl SessionVarify{
                 }
             }
         }
+
+        if !v_bool.contains(&false){
+            return hashed_session_domain_id.clone();
+        }
+        
+        String::new()
     }
-}hashed_session_domain
+}
 
 #[derive(Debug)]
 struct XApi;
