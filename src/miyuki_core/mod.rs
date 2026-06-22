@@ -4,22 +4,30 @@ use dotenvy::dotenv;
 use std::path::PathBuf;
 use x_api_rs::auth::SuspiciousLoginError;
 
-
-struct Miyuki{
-
-}
-
 trait Regular{
+    fn new() -> Self;
     fn from_str(string: String) -> Self;
+    fn checking(user_input: String) -> std::option::Option<String>;
 }
 
 struct ImporingXPost{
     x_url: String,
 }
 
-impl Regular for ImporingXPost{
+struct AuthRegular{
+    checking_input: String,
+}
+
+impl Regular for AuthRegular{
+    fn new(checking_input: String) -> Self {
+        self { checking_input }
+    }
     fn from_str(string: String) -> Self{
-        ImporingXPost { x_url: string }
+        AuthRegular { checking_input: string }
+    }
+
+    fn checking(user_input: String) -> std::option::Option<String> {
+        Some(String::new())
     }
 }
 
@@ -27,14 +35,21 @@ impl Regular for ImporingXPost{
 pub struct Auth;
 
 impl Auth{
-    pub fn input_user_id(user_inpute: String) -> String {
-        let mut checked= Regular::check(user_inpute); 
-        let if !Some(_string) = checked{
-            checked= Default::default();
+    pub fn input_user_id(user_input: String) -> String {
+        let mut checked: String;
+        {
+            let regular= Regular::new(user_input);
+            let option_checked= regular.check(user_input); 
+            if option_checked == None{
+                checked= String::new();
+            }
         }
-
         checked
     }
+}
+
+struct Miyuki{
+
 }
 
 #[derive(Debug)]
