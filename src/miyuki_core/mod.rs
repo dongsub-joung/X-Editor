@@ -5,9 +5,8 @@ use std::path::PathBuf;
 use x_api_rs::auth::SuspiciousLoginError;
 
 trait Regular{
-    fn new() -> Self;
-    fn from_str(string: String) -> Self;
-    fn checking(user_input: String) -> std::option::Option<String>;
+    fn new(str: String) -> Self;
+    fn checking(&self) -> std::option::Option<String>;
 }
 
 struct ImporingXPost{
@@ -20,13 +19,12 @@ struct AuthRegular{
 
 impl Regular for AuthRegular{
     fn new(checking_input: String) -> Self {
-        self { checking_input }
-    }
-    fn from_str(string: String) -> Self{
-        AuthRegular { checking_input: string }
+        AuthRegular { checking_input }
     }
 
-    fn checking(user_input: String) -> std::option::Option<String> {
+    fn checking(&self) -> std::option::Option<String> {
+        // self.checking_input;
+        // @TODO logic yet
         Some(String::new())
     }
 }
@@ -38,10 +36,12 @@ impl Auth{
     pub fn input_user_id(user_input: String) -> String {
         let mut checked: String;
         {
-            let regular= Regular::new(user_input);
-            let option_checked= regular.check(user_input); 
+            let regular_struct: AuthRegular= Regular::new(user_input);
+            let option_checked= regular_struct.checking(); 
             if option_checked == None{
                 checked= String::new();
+            }else{
+                checked= option_checked.unwrap();
             }
         }
         checked
