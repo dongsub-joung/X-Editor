@@ -1,7 +1,7 @@
 use thiserror::Error;
 use suffix::SuffixTable;
 use dotenvy::dotenv;
-use std::path::PathBuf;
+use std::{hash::Hash, path::PathBuf};
 use x_api_rs::auth::SuspiciousLoginError;
 
 trait Regular{
@@ -48,9 +48,37 @@ impl Auth{
     }
 }
 
-struct Miyuki{
+#[derive(Debug)]
+struct Session;
+// get_session_id();
 
+struct SessionVarify{
+    saved_hashed_session_id: String,
 }
+impl SessionVarify{
+    pub fn new(saved_session_id: String) -> Self{
+        // @TODO Do hash and save string
+        // let saved_hashed_session_id= self.do_hash_md5(saved_session_id);
+        let saved_hashed_session_id= String::new();
+        Self { saved_hashed_session_id }
+    }
+
+    // @TODO return type MD5
+    pub fn do_hash_md5(&self, normal: String) -> String{
+        // let return_value= MD5::from(normal);
+        String::new()
+    }
+
+    // @TODO Sesstion domain -> get sessition id(hashed)
+    pub fn varify_session_string(&self, hashed_session_domain_id: &String) -> String{
+        // @TODO let hashed_session_domain= session_obj.get_session_id();
+        for (i, out_c) in self.saved_hashed_session_id.chars().into_iter().enumerate(){
+            for (j,nasty_c) in hashed_session_domain_id.chars().into_iter().enumerate(){
+                out_c == nasty
+            }
+        }
+    }
+}hashed_session_domain
 
 #[derive(Debug)]
 struct XApi;
