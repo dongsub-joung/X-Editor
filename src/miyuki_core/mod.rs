@@ -72,9 +72,17 @@ impl SessionVarify{
     // @TODO Sesstion domain -> get sessition id(hashed)
     pub fn varify_session_string(&self, hashed_session_domain_id: &String) -> String{
         // @TODO let hashed_session_domain= session_obj.get_session_id();
+        
+        let mut v_bool:Vec<bool>= Vec::new();
         for (i, out_c) in self.saved_hashed_session_id.chars().into_iter().enumerate(){
             for (j,nasty_c) in hashed_session_domain_id.chars().into_iter().enumerate(){
-                out_c == nasty
+                if i == j {
+                    if out_c == nasty_c{
+                        v_bool.push(true);
+                    }else{
+                        v_bool.push(false);
+                    }
+                }
             }
         }
     }
