@@ -1,7 +1,7 @@
 use thiserror::Error;
 use suffix::SuffixTable;
 use dotenvy::dotenv;
-use std::{hash::Hash, path::PathBuf};
+use std::{collections::HashMap, hash::Hash, path::PathBuf};
 use x_api_rs::auth::SuspiciousLoginError;
 
 trait Regular{
@@ -51,6 +51,12 @@ impl Auth{
 #[derive(Debug)]
 struct Session;
 // get_session_id();
+impl Session{
+    pub fn get_user_nickname(session: Session) -> String{
+        // session.get_user_nickname()
+        String::new()
+    }
+}
 
 struct SessionVarify{
     saved_hashed_session_id: String,
@@ -97,8 +103,8 @@ impl SessionVarify{
 #[derive(Debug)]
 struct XApi;
 
-pub impl XApi{
-    pub async fn create_sesstion(mut user_session: x_api_rs::TwAPI, primitive_type_auth: Miyuki) -> Result<(), Box<dyn std::error::Error>> {
+impl XApi{
+    pub async fn create_sesstion(mut user_session: x_api_rs::TwAPI, session: Session) -> Result<(), Box<dyn std::error::Error>> {
         tracing_subscriber::fmt::init();
         let _ = dotenv();
         let cookies_path = PathBuf::from("cookies.json");
@@ -115,7 +121,8 @@ pub impl XApi{
                 if let Some(error) = error.downcast_ref::<SuspiciousLoginError>(){
                     login_err= error;
                 };
-                let username= uti::input_user_id(primitive_type_auth);
+                // let username= SessionVarify::varify_session_string(&self, hashed_session_domain_id)
+                let username= Session::get_user_nickname(session);
                 if let Ok(None)= api.login(&username, &password, "", Some(error.1.clone()))
                 .await{
                     eprintln!("{:?}", login_err);
@@ -166,7 +173,7 @@ pub enum ImportErrs{
 }
 
 impl ImportXApi{
-    pub async fn import_x_data<F>(mut user_session: dyn Future<Output= x_api_rs::TwAPI>, primitive_type: miyuki_core::OneLine)
+    pub async fn import_x_data(mut user_session , primitive_type: miyuki_core::OneLine)
     // -> Result<Box<dyn ImportErrs>
     {
         if !user_session.is_logged_in().await{
@@ -242,19 +249,22 @@ impl ImportXApi{
 
 // @TODO Miyiki_core is GUI thread
 
+#[derive(Debug)]
+struct MiyukiGUI;
 
 struct OneLine{
-    line: HashMap<Miyuki_GUI_Componante, String>;
+    line: HashMap<MiyukiGUI, String>,
 }
 
 impl OneLine{
-   pub fn new(line_data: GUI_line, body :String) -> Self{
-       let mut map: HashMap<Miyuki_GUI_Componante, String>= HashMap::new(); 
-       self { map.push( (key:line_data, value: body) )  }
+   pub fn new(line_data: MiyukiGUI, body :String) -> Self{
+       let mut map: HashMap<MiyukiGUI, String>= HashMap::new();
+       map.insert(line_data, body); 
+       self { line: map }
    }
 
-    pub fn get_data(one_line: &self, count: usize) -> &HashMap<Miyuki_GUI_Componante, String>{
-        one_line.line.iter.Fillter(|e| e.get_key(count) );
+    pub fn get_data(&self, count: usize) -> &HashMap<MiyukiGUI, String>{
+        self.line.iter.Fillter(|e| e.get_key(count) );
     }
 }
 
@@ -275,7 +285,7 @@ pub struct Caputre{
 }
 
 impl Caputre{
-    pub fn caputring(miyuki: RefCell<Rc<GUI>>) -> Result<Ok(), Err()>{
+    pub fn caputring(miyuki: RefCell<Rc<GUI>>) -> Result<Err>{
         loop{
             let inputed= miyuki.read_user_input()?; // -> GUI struct
             
