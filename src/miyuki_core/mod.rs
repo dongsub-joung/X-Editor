@@ -176,10 +176,6 @@ impl ImportXApi{
     pub async fn import_x_data(mut user_session , primitive_type: miyuki_core::OneLine)
     // -> Result<Box<dyn ImportErrs>
     {
-        if !user_session.is_logged_in().await{
-            user_session= auth_x::XApi::create_sesstion(user_session, primitive_type);
-        }
-
         let user_id = match user_session.me_rest_id().await{
             Ok(res) => res,
             Err(e) => {
@@ -212,7 +208,7 @@ impl ImportXApi{
         let pagination; //@TODO
         loop {
              pagination = match api.get_friends(user_id, true, Some(cursor.into())){
-                Ok(e) => { e },
+                Ok(friends) => { friends },
                 Err(e) =>{
                     return ImportErrs::FailGetFriends;
                 },

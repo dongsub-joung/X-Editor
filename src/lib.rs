@@ -4,7 +4,7 @@ mod miyuki_core;
 // use compile_type_eq::{assert_types_eq, assert_types_not_eq};
 
 #[cfg(test)]
-mod tests {
+mod language_tests {
     use super::*;
     use crate::miyuki_user::Language;
     
@@ -45,7 +45,7 @@ mod import_test{
 }
 
 // User import
-mod test{
+mod user_import_test{
     use crate::miyuki_core::*;
 
     #[test(name="Handle: Login_failed")]
